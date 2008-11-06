@@ -1,0 +1,72 @@
+diff -urN NetworkManager-0.6.5.orig/src/NetworkManagerSystem.c NetworkManager-0.6.5/src/NetworkManagerSystem.c
+--- NetworkManager-0.6.5.orig/src/NetworkManagerSystem.c	2008-08-27 19:06:06.000000000 +0200
++++ NetworkManager-0.6.5/src/NetworkManagerSystem.c	2008-08-27 19:13:43.000000000 +0200
+@@ -247,10 +247,13 @@
+ 	int				i = RTNL_LINK_NOT_FOUND;
+ 
+ 	nlh = new_nl_handle ();
+-	if (nlh && (cache = get_link_cache (nlh)))
+-		i = rtnl_link_name2i (cache, iface);
+-	nl_close (nlh);
+-	nl_handle_destroy (nlh);
++	if (nlh)
++    {
++        if(cache = get_link_cache (nlh))
++		    i = rtnl_link_name2i (cache, iface);
++    	nl_close (nlh);
++	    nl_handle_destroy (nlh);
++    }
+ 
+ 	return i;
+ }
+@@ -265,17 +268,20 @@
+ 	char *			buf = NULL;
+ 
+ 	nlh = new_nl_handle ();
+-	if (nlh && (cache = get_link_cache (nlh)))
+-	{
+-		buf = g_malloc0 (MAX_IFACE_LEN);
+-		if (!rtnl_link_i2name (cache, rtnl_index, buf, MAX_IFACE_LEN - 1))
+-		{
+-			g_free (buf);
+-			buf = NULL;
+-		}
+-	}
+-	nl_close (nlh);
+-	nl_handle_destroy (nlh);
++	if (nlh)
++    {
++        if (cache = get_link_cache (nlh))
++	    {
++		    buf = g_malloc0 (MAX_IFACE_LEN);
++		    if (!rtnl_link_i2name (cache, rtnl_index, buf, MAX_IFACE_LEN - 1))
++		    {
++			    g_free (buf);
++			    buf = NULL;
++		    }
++    	}
++	    nl_close (nlh);
++	    nl_handle_destroy (nlh);
++    }
+ 
+ 	return buf;
+ }
+@@ -309,6 +315,8 @@
+ 	nm_system_flush_arp_cache ();
+ 
+ 	nlh = new_nl_handle ();
++    if (!nlh)
++        return FALSE;
+ 
+ 	if ((addr = nm_ip4_config_to_rtnl_addr (config, NM_RTNL_ADDR_DEFAULT)))
+ 	{
+@@ -432,7 +440,8 @@
+ 		nm_system_device_set_up_down_with_iface (iface, TRUE);
+ 
+ 		nlh = new_nl_handle ();
+-
++        if (!nlh)
++            return FALSE;
+ 		if ((addr = nm_ip4_config_to_rtnl_addr (config, NM_RTNL_ADDR_PTP_DEFAULT)))
+ 		{
+ 			int err = 0;

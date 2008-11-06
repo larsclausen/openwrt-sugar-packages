@@ -1,0 +1,17 @@
+--- a/extensions/python/dom/Makefile.in
++++ b/extensions/python/dom/Makefile.in
+@@ -38,10 +38,13 @@ DEPTH   =../../..
+ 
+ DIRS = \
+         src \
+-        test \
+ 	nsdom \
+         $(NULL)
+ 
++ifdef ENABLE_TESTS
++        DIRS += test $(NULL)
++endif
++
+ topsrcdir	= @top_srcdir@
+ srcdir		= @srcdir@
+ VPATH		= @srcdir@

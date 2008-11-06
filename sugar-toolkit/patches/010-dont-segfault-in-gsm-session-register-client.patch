@@ -1,0 +1,12 @@
+diff -urN sugar-toolkit-v0.81.7.orig/src/sugar/gsm-session.c sugar-toolkit-v0.81.7/src/sugar/gsm-session.c
+--- sugar-toolkit-v0.81.7.orig/src/sugar/gsm-session.c	2008-08-12 06:54:25.000000000 +0200
++++ sugar-toolkit-v0.81.7/src/sugar/gsm-session.c	2008-08-12 06:49:17.000000000 +0200
+@@ -307,7 +307,7 @@
+       client_id = g_strdup (id);
+     }
+ 
+-  g_debug ("Adding new client %s to session", id);
++  g_debug ("Adding new client %s to session", client_id);
+ 
+   g_signal_connect (client, "saved_state",
+ 		    G_CALLBACK (client_saved_state), session);

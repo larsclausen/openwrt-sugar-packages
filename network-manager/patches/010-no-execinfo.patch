@@ -1,0 +1,105 @@
+*** NetworkManager-0.6.5/utils/nm-utils.h.orig	2008-08-04 20:11:02.000000000 +0200
+--- NetworkManager-0.6.5/utils/nm-utils.h	2008-08-04 20:11:44.000000000 +0200
+***************
+*** 23,34 ****
+  #define NM_UTILS_H
+  
+  #include <glib.h>
+! #include <execinfo.h>
+  
+  #define nm_print_backtrace()						\
+  G_STMT_START								\
+  {									\
+! 	void *_call_stack[512];						\
+  	int  _call_stack_size;						\
+  	char **_symbols;						\
+  	_call_stack_size = backtrace (_call_stack,			\
+--- 23,34 ----
+  #define NM_UTILS_H
+  
+  #include <glib.h>
+! //#include <execinfo.h>
+  
+  #define nm_print_backtrace()						\
+  G_STMT_START								\
+  {									\
+! /*	void *_call_stack[512];						\
+  	int  _call_stack_size;						\
+  	char **_symbols;						\
+  	_call_stack_size = backtrace (_call_stack,			\
+*************** G_STMT_START								\
+*** 45,51 ****
+  			_i++;						\
+  		}							\
+  		free (_symbols);					\
+! 	}								\
+  }									\
+  G_STMT_END
+  
+--- 45,51 ----
+  			_i++;						\
+  		}							\
+  		free (_symbols);					\
+! 	}*/								\
+  }									\
+  G_STMT_END
+  
+*** NetworkManager-0.6.5/src/nm-logging.c.orig	2008-08-04 20:24:39.000000000 +0200
+--- NetworkManager-0.6.5/src/nm-logging.c	2008-08-04 20:25:45.000000000 +0200
+***************
+*** 20,26 ****
+   */
+  
+  #include <syslog.h>
+! #include <execinfo.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+--- 20,26 ----
+   */
+  
+  #include <syslog.h>
+! //#include <execinfo.h>
+  #include <stdio.h>
+  #include <stdlib.h>
+  #include <signal.h>
+***************
+*** 36,42 ****
+  static void
+  fallback_get_backtrace (void)
+  {
+! 	void *	frames[64];
+  	size_t	size;
+  	char **	strings;
+  	size_t	i;
+--- 36,42 ----
+  static void
+  fallback_get_backtrace (void)
+  {
+! /*	void *	frames[64];
+  	size_t	size;
+  	char **	strings;
+  	size_t	i;
+*************** fallback_get_backtrace (void)
+*** 51,60 ****
+  		syslog (LOG_CRIT, "******************* END **********************************");
+  	}
+  	else
+! 	{
+  		nm_warning ("NetworkManager crashed, but symbols "
+  					"couldn't be retrieved.");
+! 	}
+  }
+  
+  
+--- 51,60 ----
+  		syslog (LOG_CRIT, "******************* END **********************************");
+  	}
+  	else
+! 	{*/
+  		nm_warning ("NetworkManager crashed, but symbols "
+  					"couldn't be retrieved.");
+! /*	}*/
+  }
+  
+  

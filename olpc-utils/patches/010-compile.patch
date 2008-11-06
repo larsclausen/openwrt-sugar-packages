@@ -1,0 +1,25 @@
+diff -urN olpc-utils-v0.83.orig/Makefile.build olpc-utils-v0.83/Makefile.build
+--- olpc-utils-v0.83.orig/Makefile.build	2008-08-14 20:43:18.000000000 +0200
++++ olpc-utils-v0.83/Makefile.build	2008-08-14 20:45:10.000000000 +0200
+@@ -27,18 +27,18 @@
+ # objects
+ 
+ %.o: %.c
+-	$(CC) $(WARNFLAGS) -c -o $@ $<
++	$(CC) $(CFLAGS) $(WARNFLAGS) -c -o $@ $<
+ 
+ 
+ # built works
+ 
+ usr/sbin/setolpckeys: $(SETOLPCKEYS_OBJS)
+ 	mkdir -p $(dir $@)
+-	$(CC) -o $@ $(filter %.o,$^)
++	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(filter %.o,$^)
+ 
+ usr/sbin/olpc-dm: $(OLPC_DM_OBJS)
+ 	mkdir -p $(dir $@)
+-	$(CC) -lpam_misc -lpam -o $@ $(filter %.o,$^)
++	$(CC) $(CFLAFS) $(LDFLAGS) -lpam_misc -lpam -o $@ $(filter %.o,$^)
+ 
+ 
+ # install targets

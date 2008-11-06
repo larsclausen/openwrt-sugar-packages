@@ -1,0 +1,31 @@
+diff -urN ohm-HEAD.orig/autogen.sh ohm-HEAD/autogen.sh
+--- ohm-HEAD.orig/autogen.sh	2008-09-13 22:40:51.000000000 +0200
++++ ohm-HEAD/autogen.sh	2008-09-13 22:41:21.000000000 +0200
+@@ -21,13 +21,12 @@
+ echo "Running $LIBTOOLIZE --automake..."
+ $LIBTOOLIZE --automake -c || exit 1
+ 
+-echo "Running gtkdocize..."
+-gtkdocize --copy || exit 1
+-
+ echo "Running $AUTOMAKE..."
+ $AUTOMAKE -a -c || exit 1
+ $AUTOMAKE -a ohmd/Makefile || exit 1
+ 
++chmod +x configure
++chmod +x install-sh
+ 
+ conf_flags=""
+ 
+diff -urN ohm-HEAD.orig/configure.in ohm-HEAD/configure.in
+--- ohm-HEAD.orig/configure.in	2008-09-13 22:40:51.000000000 +0200
++++ ohm-HEAD/configure.in	2008-09-13 22:41:32.000000000 +0200
+@@ -30,8 +30,6 @@
+ AC_PATH_PROG(GLIB_GENMARSHAL, glib-genmarshal)
+ 
+ 
+-GTK_DOC_CHECK([1.8])
+-
+ ALL_LINGUAS="en_GB"
+ AC_SUBST(ALL_LINGUAS)
+ 

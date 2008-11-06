@@ -1,0 +1,53 @@
+diff -urN sugar-log-activity-v13.orig/logviewer.py sugar-log-activity-v13/logviewer.py
+--- sugar-log-activity-v13.orig/logviewer.py	2008-08-26 17:03:22.000000000 +0200
++++ sugar-log-activity-v13/logviewer.py	2008-08-26 17:31:16.000000000 +0200
+@@ -25,7 +25,7 @@
+ import gtk
+ import pango
+ import gobject
+-import gnomevfs
++import gio
+ 
+ from sugar.activity import activity
+ from sugar import env
+@@ -143,28 +143,28 @@
+             return 0
+ 
+     def _configure_watcher(self):
+-        # Setting where gnomeVFS will be watching
++        # Setting where gio will be watching
+         for p in self.paths:
+-            gnomevfs.monitor_add('file://' + p,
+-                                 gnomevfs.MONITOR_DIRECTORY,
+-                                 self._log_file_changed_cb)
++            dir = gio.File("file://" + p)
++            monitor = dir.monitor_directory()
++            monitor.connect("changed", self._log_file_changed_cb)
+ 
+         for f in self.extra_files:
+-            gnomevfs.monitor_add('file://' + f,
+-                             gnomevfs.MONITOR_FILE,
+-                             self._log_file_changed_cb)
++            file = gio.File("file://" + f)
++            monitor = file.monitor_file()
++            monitor.connect("changed", self._log_file_changed_cb)
+ 
+-    def _log_file_changed_cb(self, monitor_uri, info_uri, event):
+-        path = info_uri.split('file://')[-1]
++    def _log_file_changed_cb(self, monitor, file, other_file, event_type):
++        path = file.get_path() 
+         dir, logfile = os.path.split(path)
+ 
+-        if event == gnomevfs.MONITOR_EVENT_CHANGED:
++        if event == gio.FILE_MONITOR_EVENT_CHANGED:
+             if self.logs.has_key(logfile):
+                 self.logs[logfile].update()
+-        elif event == gnomevfs.MONITOR_EVENT_DELETED:
++        elif event == gio.FILE_MONITOR_EVENT_DELETED:
+             if self.logs.has_key(logfile):
+                 self._remove_log_file(logfile)
+-        elif event == gnomevfs.MONITOR_EVENT_CREATED:
++        elif event == gio.FILE_MONITOR_EVENT_CREATED:
+             self._add_log_file(path)
+ 
+     def _cursor_changed_cb(self, treeview):

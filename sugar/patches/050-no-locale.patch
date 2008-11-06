@@ -1,0 +1,46 @@
+diff -urN sugar-v0.82.8.orig/src/controlpanel/model/language.py sugar-v0.82.8/src/controlpanel/model/language.py
+--- sugar-v0.82.8.orig/extensions/cpsection/language/model.py	2008-09-30 15:37:36.000000000 +0200
++++ sugar-v0.82.8/extensions/cpsection/language/model.py	2008-09-30 15:39:00.000000000 +0200
+@@ -28,20 +28,30 @@
+ _standard_msg = _("Could not access ~/.i18n. Create standard settings.")
+ 
+ def read_all_languages():
+-    fdp = subprocess.Popen(['locale', '-av'], stdout=subprocess.PIPE)
+-    lines = fdp.stdout.read().split('\n')
+     locales = []
++    _locale_dir = '/usr/locale/'
+ 
+-    for line in lines:
+-        if line.find('locale:') != -1:
+-            locale = line.lstrip('locale:')
+-            locale = locale.split('archive:')[0].strip()
+-        elif line.find('language |') != -1:
+-            lang = line.lstrip('language |')
+-        elif line.find('territory |') != -1:
+-            territory = line.lstrip('territory |')
+-            if locale.endswith('utf8') and len(lang):
+-                locales.append((lang, territory, locale))
++    if os.path.exists(_locale_dir):
++
++        for locale in os.listdir(_locale_dir):
++            ident_file = os.path.join(_locale_dir, locale, "LC_IDENTIFICATION")
++            try:
++                f = file(ident_file, "rb")
++                content = f.read()
++                f.close()
++
++                magic, num_strings = struct.unpack("II", content[0:8])
++
++                if magic == 537071897:
++                    indices = struct.unpack("I"*num_strings,
++                                            content[8:8+4*num_strings])
++
++                    language = content[indices[7]:content.find("\0", indices[7])]
++                    territory = content[indices[8]:content.find("\0", indices[8])]
++
++                    locales.append((language, territory, locale))
++            except:
++                pass
+ 
+     #FIXME: This is a temporary workaround for locales that are essential to 
+     # OLPC, but are not in Glibc yet.

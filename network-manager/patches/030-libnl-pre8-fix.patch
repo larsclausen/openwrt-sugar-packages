@@ -1,0 +1,37 @@
+--- NetworkManager-0.6.5.orig/src/NetworkManagerSystem.c	2008-08-27 20:37:16.000000000 +0200
++++ NetworkManager-0.6.5/src/NetworkManagerSystem.c	2008-08-27 20:40:41.000000000 +0200
+@@ -224,16 +224,25 @@
+ 
+ static struct nl_handle * new_nl_handle (void)
+ {
+-	struct nl_handle *	nlh = NULL;
++	struct nl_handle *nlh;
++    struct nl_cb *cb;
+ 
+-	nlh = nl_handle_alloc_nondefault(NL_CB_VERBOSE);
+-	nl_handle_set_pid (nlh, (pthread_self() << 16 | getpid()));
+-	if (nl_connect(nlh, NETLINK_ROUTE) < 0)
+-	{
+-		nm_warning ("%s: couldn't connecto to netlink: %s", __func__, nl_geterror());
+-		nl_handle_destroy (nlh);
+-		nlh = NULL;
+-	}
++        cb = nl_cb_alloc (NL_CB_VERBOSE);
++	    nlh = nl_handle_alloc_cb(cb);
++	
++        if (!nlh)
++        {
++            nm_warning ("couldn't allocate netlink handle.");
++            return NULL;
++        }
++    
++        if (nl_connect(nlh, NETLINK_ROUTE) < 0)
++	    {
++		    nm_warning ("%s: couldn't connecto to netlink: %s", __func__,
++            nl_geterror());
++		    nl_handle_destroy (nlh);
++		    nlh = NULL;
++	    }
+ 
+ 	return nlh;
+ }

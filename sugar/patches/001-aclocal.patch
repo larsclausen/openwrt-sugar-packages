@@ -1,0 +1,12 @@
+*** sugar-HEAD/Makefile.am.orig	2008-07-31 13:18:06.000000000 +0200
+--- sugar-HEAD/Makefile.am	2008-07-31 13:18:24.000000000 +0200
+***************
+*** 1,5 ****
+--- 1,7 ----
+  SUBDIRS = bin data po src service
+  
++ ACLOCAL_AMFLAGS = -I m4
++ 
+  DISTCLEANFILES =		\
+  	intltool-extract	\
+  	intltool-merge		\

@@ -1,0 +1,91 @@
+diff --git a/src/orb/dynamic/Makefile.in b/src/orb/dynamic/Makefile.in
+index 1cf644e..0e2c27d 100644
+--- a/src/orb/dynamic/Makefile.in
++++ b/src/orb/dynamic/Makefile.in
+@@ -241,7 +241,7 @@ IDL_FLAGS = -I$(top_srcdir)/src/idl/CORBA_PIDL			\
+ 	--showcpperrors
+ 
+ IDL_FILES = dynamic-defs.idl
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ BUILT_SOURCES = $(DYNAMIC_IDLOUT)
+diff --git a/src/orb/orb-core/Makefile.in b/src/orb/orb-core/Makefile.in
+index 587adc1..2b51938 100644
+--- a/src/orb/orb-core/Makefile.in
++++ b/src/orb/orb-core/Makefile.in
+@@ -305,7 +305,7 @@ IDL_FLAGS = -I$(top_srcdir)/src/idl/CORBA_PIDL			\
+ 
+ IDL_FILES = corba-defs.idl iop-defs.idl corba-ops.idl orbit-interface.idl
+ IDL_DIR = $(top_srcdir)/src/orb/orb-core/
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ IDL_FLAGS_CORBA_OPS = --showcpperrors
+diff --git a/src/orb/poa/Makefile.in b/src/orb/poa/Makefile.in
+index 7938c53..c451c21 100644
+--- a/src/orb/poa/Makefile.in
++++ b/src/orb/poa/Makefile.in
+@@ -260,7 +260,7 @@ IDL_FLAGS = -I$(top_srcdir)/src/idl/CORBA_PIDL			\
+         --showcpperrors
+ 
+ IDL_FILES = poa-defs.idl
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ BUILT_SOURCES = $(POA_IDLOUT)
+diff --git a/include/orbit/dynamic/Makefile.in b/include/orbit/dynamic/Makefile.in
+index 13168fd..8323751 100644
+--- a/include/orbit/dynamic/Makefile.in
++++ b/include/orbit/dynamic/Makefile.in
+@@ -223,7 +223,7 @@ IDL_FLAGS = -I$(top_srcdir)/src/idl/CORBA_PIDL			\
+ 
+ IDL_DIR = $(top_srcdir)/src/orb/dynamic/
+ IDL_FILES = dynamic-defs.idl
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ CLEANFILES = $(BUILT_SOURCES)
+diff --git a/include/orbit/orb-core/Makefile.in b/include/orbit/orb-core/Makefile.in
+index c70d909..cf5fbbc 100644
+--- a/include/orbit/orb-core/Makefile.in
++++ b/include/orbit/orb-core/Makefile.in
+@@ -250,7 +250,7 @@ IDL_FLAGS = $(IDL_FLAGS_NO_DEFS)		\
+ 
+ IDL_FILES = corba-defs.idl iop-defs.idl orbit-interface.idl
+ IDL_DIR = $(top_srcdir)/src/orb/orb-core/
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ CLEANFILES = $(BUILT_SOURCES)
+diff --git a/include/orbit/poa/Makefile.in b/include/orbit/poa/Makefile.in
+index b0fe78a..2ad5567 100644
+--- a/include/orbit/poa/Makefile.in
++++ b/include/orbit/poa/Makefile.in
+@@ -229,7 +229,7 @@ IDL_FLAGS = -I$(top_srcdir)/src/idl/CORBA_PIDL				\
+ 
+ IDL_FILES = poa-defs.idl
+ IDL_DIR = $(top_srcdir)/src/orb/poa/
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ CLEANFILES = $(BUILT_SOURCES)
+diff --git a/src/services/name/Makefile.in b/src/services/name/Makefile.in
+index 8b882d9..7239cdf 100644
+--- a/src/services/name/Makefile.in
++++ b/src/services/name/Makefile.in
+@@ -303,7 +303,7 @@ CosNaming_built = \
+ 
+ IDL_FLAGS = --showcpperrors
+ IDL_FILES = CosNaming.idl
+-IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
++IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
+ @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
+ @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
+ CLEANFILES = my_cosnaming_built $(BUILT_SOURCES)

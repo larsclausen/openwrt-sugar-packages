@@ -1,0 +1,27 @@
+diff -urN ohm-HEAD.orig/configure.in ohm-HEAD/configure.in
+--- ohm-HEAD.orig/configure.in	2008-08-13 19:38:05.000000000 +0200
++++ ohm-HEAD/configure.in	2008-08-13 19:40:58.000000000 +0200
+@@ -357,11 +357,6 @@
+ plugins/policy/timeouts/Makefile
+ ohmd/Makefile
+ po/Makefile.in
+-docs/Makefile
+-docs/index.xml
+-docs/reference/Makefile
+-docs/reference/ohm-plugin/Makefile
+-docs/reference/libohm/Makefile
+ libohm/Makefile
+ libidletime/Makefile
+ tools/Makefile
+diff -urN ohm-HEAD.orig/Makefile.am ohm-HEAD/Makefile.am
+--- ohm-HEAD.orig/Makefile.am	2008-08-13 19:38:05.000000000 +0200
++++ ohm-HEAD/Makefile.am	2008-08-13 19:39:17.000000000 +0200
+@@ -2,7 +2,6 @@
+ 	ohmd				\
+ 	po				\
+ 	initscript			\
+-	docs				\
+ 	libohm				\
+ 	libidletime			\
+ 	tools				\
+Binärdateien ohm-HEAD.orig/.Makefile.am.swp and ohm-HEAD/.Makefile.am.swp sind verschieden.

@@ -1,0 +1,21 @@
+diff -ruN sugar-base-v0.81.2.orig/src/sugar/mime.py sugar-base-v0.81.2/src/sugar/mime.py
+--- sugar-base-v0.81.2.orig/src/sugar/mime.py	2008-08-13 14:41:16.000000000 +0200
++++ sugar-base-v0.81.2/src/sugar/mime.py	2008-08-13 14:45:25.000000000 +0200
+@@ -19,6 +19,7 @@
+ import os
+ import logging
+ import gettext
++import gio
+ 
+ from sugar import _sugarbaseext
+ 
+@@ -102,8 +103,7 @@
+     if generic_type:
+         return generic_type['name']
+ 
+-    import gnomevfs
+-    return gnomevfs.mime_get_description(mime_type)
++    return gio.content_type_get_description(mime_type)
+ 
+ def get_mime_parents(mime_type):
+     return _sugarbaseext.list_mime_parents(mime_type)

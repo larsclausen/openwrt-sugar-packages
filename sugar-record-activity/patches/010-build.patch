@@ -1,0 +1,37 @@
+--- sugar-record-activity-v59/Makefile.orig	2008-09-30 16:17:16.000000000 +0200
++++ sugar-record-activity-v59/Makefile	2008-09-30 16:20:51.000000000 +0200
+@@ -1,5 +1,4 @@
+-PYVER=`python -c "import sys; print '%s.%s' % (sys.version_info[0], sys.version_info[1])"`
+-PYTHON=python$(PYVER)
++PYTHON=python2.5
+ 
+ GLIB_INCLUDES=`pkg-config --cflags glib-2.0`
+ GLIB_LIBS=`pkg-config --libs glib-2.0`
+@@ -16,21 +15,22 @@
+ PYCAIRO_INCLUDES=`pkg-config --cflags pycairo`
+ PYCAIRO_LIBS=`pkg-config --libs pycairo`
+ 
+-INCLUDES=-I. -I/usr/include/${PYTHON} ${GLIB_INCLUDES} ${PYGTK_INCLUDES} ${CAIRO_INCLUDES} ${PYCAIRO_INCLUDES} ${GTK_INCLUDES}
+-ARCHFLAGS=-m32 -march=i386 -mtune=generic 
++PYTHON_INCLUDES=`python2.5-config --includes`
++
++INCLUDES=-I. ${PYTHON_INCLUDES} ${GLIB_INCLUDES} ${PYGTK_INCLUDES} ${CAIRO_INCLUDES} ${PYCAIRO_INCLUDES} ${GTK_INCLUDES}
+ OPTFLAGS=-O2 -g -pipe -Wall -Wp,-D_FORTIFY_SOURCE=2 -fexceptions -fstack-protector --param=ssp-buffer-size=4 -fasynchronous-unwind-tables
+ CFLAGS=-g -fPIC -DPIC
+-LDFLAGS=-shared -nostdlib -Wl,--export-dynamic -pthread 
++LDFLAGS=-shared -nostdlib -Wl,--export-dynamic -pthread
+ 
+ all: build link
+ 
+ build: _camera.o
+ _camera.o: _camera.c
+-	gcc ${INCLUDES} ${ARCHFLAGS} ${OPTFLAGS} ${CFLAGS} -c _camera.c -o _camera.o
++	${CC} ${INCLUDES} ${ARCHFLAGS} ${OPTFLAGS} ${CFLAGS} -c _camera.c -o _camera.o
+ 
+ link: _camera.so
+ _camera.so: _camera.o
+-	g++ ${LDFLAGS} _camera.o ${GLIB_LIBS} ${PYGTK_LIBS} ${CAIRO_LIBS} ${PYCAIRO_LIBS} ${GTK_LIBS} -Wl,-soname -Wl,_camera.so -o _camera.so
++	${CC} ${LDFLAGS} _camera.o ${GLIB_LIBS} ${PYGTK_LIBS} ${CAIRO_LIBS} ${PYCAIRO_LIBS} ${GTK_LIBS} -Wl,-soname -Wl,_camera.so -o _camera.so
+ 
+ clean: 
+ 	@find -name "*.o" -exec rm {} \;

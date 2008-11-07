@@ -47,8 +47,12 @@ define Package/orbit2
   CATEGORY:=Xorg
   SUBMENU:=lib
   TITLE:=ORBit2
-  URL:=http://ORBit.sourceforge.net/
-  DEPENDS:=+popt +libIDL2
+  URL:=http://www.gnome.org/projects/ORBit2/
+  DEPENDS:=+glib2 +libIDL2
+endef
+
+define Package/orbit2/description
+ORBit2 is a CORBA 2.4-compliant Object Request Broker (ORB).
 endef
 
 define Build/Configure

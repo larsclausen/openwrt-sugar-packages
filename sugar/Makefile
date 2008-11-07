@@ -37,7 +37,7 @@ define Package/sugar
   SUBMENU:=framework
   TITLE:=Sugar Desktop Environment
   DEPENDS:=+sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore \
-  +sugar-artwork
+  +sugar-artwork +gconf
 #  DEPENDS:=+sugar-artwork +sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore +telepathy-python +pycairo +numpy +gst-python +dbus-python +python-gtk +python-gobject +simplejson +python-gnome-desktop
 endef
 
@@ -48,7 +48,6 @@ endef
 
 define Package/sugar/install
 	$(CP) $(PKG_INSTALL_DIR)/* $(1)/
-	$(INSTALL_BIN) ./files/* $(1)/
 endef
 
 $(eval $(call BuildPackage,sugar))

@@ -4,8 +4,9 @@ PKG_NAME:=orbit2
 PKG_VERSION:=2.14.16
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
-PKG_SOURCE_URL:=@GNOME/$(PKG_NAME)/2.14
+PKG_BUILD_DIR:=$(BUILD_DIR)/ORBit2-$(PKG_VERSION)
+PKG_SOURCE:=ORBit2-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=@GNOME/ORBit2/2.14
 #PKG_MD5SUM:=d7fb9eb41e8196f1aacf2f08375ae555
 PKG_FIXUP:=libtool
 
@@ -18,8 +19,8 @@ EXTRA_CFLAGS+= \
 	-I$(STAGING_DIR)/usr/libiconv/include
 
 EXTRA_LDFLAGS+= \
-	-L$(STAGING_DIR)/usr/lib/libintl/lib/ \
-	-L$(STAGING_DIR)/usr/lib/libiconv/lib/
+	-L$(STAGING_DIR)/usr/lib/libintl/lib \
+	-L$(STAGING_DIR)/usr/lib/libiconv/lib
 
 BIGENDIAN=no
 ifeq ($(CONFIG_BIG_ENDIAN),y)
@@ -47,11 +48,11 @@ define Package/orbit2
   SUBMENU:=lib
   TITLE:=ORBit2
   URL:=http://ORBit.sourceforge.net/
-  DEPENDS:=+popt
+  DEPENDS:=+popt +libIDL2
 endef
 
 define Build/Configure
-	mkdir -p $(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)
+	$(INSTALL_DIR) $(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)
 	( cd $(PKG_BUILD_DIR); CONFIG_SITE= \
 		PKG_CONFIG=/usr/bin/pkg-config \
 		PKG_CONFIG_PATH= \
@@ -70,31 +71,31 @@ define Build/Configure
 endef
 
 define Build/InstallDev
-    $(INSTALL_DIR) $(1)/usr/{include/orbit-2.0,lib/pkgconfig}
+	$(INSTALL_DIR) $(1)/usr/{include/orbit-2.0,lib/pkgconfig}
 
-    $(INSTALL_DATA) \
-        $(PKG_INSTALL_DIR)/usr/lib/*.{so*,la} \
-        $(1)/usr/lib/
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/usr/lib/*.{so*,la} \
+		$(1)/usr/lib/
 
-    $(INSTALL_DATA) \
-        $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* \
-        $(1)/usr/lib/pkgconfig/
-    $(SED) \
-        's,orbit_idl=.*,orbit_idl=$(STAGING_DIR)/host/bin/orbit-idl-2,g' \
-        $(1)/usr/lib/pkgconfig/ORBit-2.0.pc
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* \
+		$(1)/usr/lib/pkgconfig/
+	$(SED) \
+		's,orbit_idl=.*,orbit_idl=$(STAGING_DIR)/host/bin/orbit-idl-2,g' \
+		$(1)/usr/lib/pkgconfig/ORBit-2.0.pc
 
-    $(CP) \
-        $(PKG_INSTALL_DIR)/usr/include/orbit-2.0/*
-        $(1)/usr/include/orbit-2.0/
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/include/orbit-2.0/* \
+		$(1)/usr/include/orbit-2.0/
 
-    $(INSTALL_DIR) $(2)/bin
-    $(INSTALL_BIN) \
-        $(PKG_INSTALL_DIR)/usr/bin/orbit2-config \
-        $(2)/bin
+	$(INSTALL_DIR) $(2)/bin
+	$(INSTALL_BIN) \
+		$(PKG_INSTALL_DIR)/usr/bin/orbit2-config \
+		$(2)/bin
 
-    $(INSTALL_BIN) \
-        $(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)/bin/orbit-idl-2 \
-        $(2)/bin
+	$(INSTALL_BIN) \
+		$(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)/bin/orbit-idl-2 \
+		$(2)/bin
 endef
 
 define Package/orbit2/install
@@ -102,5 +103,3 @@ define Package/orbit2/install
 endef
 
 $(eval $(call BuildPackage,orbit2))
-
-

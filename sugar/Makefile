@@ -37,8 +37,8 @@ define Package/sugar
   SUBMENU:=framework
   TITLE:=Sugar Desktop Environment
   DEPENDS:=+sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore \
-  +sugar-artwork +libgconf2
-#  DEPENDS:=+sugar-artwork +sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore +telepathy-python +pycairo +numpy +gst-python +dbus-python +python-gtk +python-gobject +simplejson +python-gnome-desktop
+  +sugar-artwork +libgconf2 +python-cjson
+#  DEPENDS:=+sugar-artwork +sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore +telepathy-python +pycairo +numpy +gst-python +dbus-python +python-gtk +python-gobject +python-gnome-desktop
 endef
 
 define Build/Configure

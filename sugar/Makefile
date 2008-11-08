@@ -37,13 +37,20 @@ define Package/sugar
   SUBMENU:=framework
   TITLE:=Sugar Desktop Environment
   DEPENDS:=+sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore \
-  +sugar-artwork +gconf
+  +sugar-artwork +libgconf2
 #  DEPENDS:=+sugar-artwork +sugar-base +sugar-toolkit +sugar-presence-service +sugar-datastore +telepathy-python +pycairo +numpy +gst-python +dbus-python +python-gtk +python-gobject +simplejson +python-gnome-desktop
 endef
 
 define Build/Configure
 	(cd $(PKG_BUILD_DIR); mkdir m4; intltoolize --force; autoreconf --install -v);
 	$(call Build/Configure/Default)
+endef
+
+define Build/InstallDev
+	$(INSTALL_DIR) $(1)/mk
+	$(INSTALL_DATA) \
+	    ./files/sugar-activity-package.mk \
+	    $(1)/mk/
 endef
 
 define Package/sugar/install

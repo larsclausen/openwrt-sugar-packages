@@ -19,6 +19,9 @@ PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
 
+TARGET_LDFLAGS+= \
+	-L$(STAGING_DIR)/usr/lib/libintl/lib
+
 define Package/sugar-record-activity
   SECTION:=xorg-app
   CATEGORY:=Xorg

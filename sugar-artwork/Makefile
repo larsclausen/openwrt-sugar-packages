@@ -1,4 +1,4 @@
-# 
+#
 # Copyright (C) 2008 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sugar-artwork
-PKG_VERSION:=HEAD
+PKG_VERSION:=v0.83.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -46,3 +46,6 @@ define Package/sugar-artwork/install
 endef
 
 $(eval $(call BuildPackage,sugar-artwork))
+$(eval $(call RequireCommand,icon-slice, \
+    $(PKG_NAME) requires icon-slice installed on the host-system. \
+))

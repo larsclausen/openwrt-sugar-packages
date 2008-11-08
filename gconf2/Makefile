@@ -24,7 +24,7 @@ TARGET_LDFLAGS+= \
 
 define Package/libgconf2
   SECTION:=lib
-  CATEGORY:=libraries
+  CATEGORY:=Libraries
   TITLE:=GConf2 library
   URL:=http://www.gnome.org/projects/gconf/
   DEPENDS:=+orbit2 +glib2 +dbus +libdbus-glib +libxml2
@@ -36,7 +36,7 @@ endef
 
 define Package/gconf2
   SECTION:=utils
-  CATEGORY:=Utils
+  CATEGORY:=Utilities
   TITLE:=GConf2 command line utils
   URL:=http://www.gnome.org/projects/gconf/
   DEPENDS:=+libgconf2

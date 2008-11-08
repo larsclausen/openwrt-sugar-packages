@@ -5,10 +5,13 @@
 # See /LICENSE for more information.
 #
 
-PKG_SUGAR_ACTIVITY_DIR:=/usr/share/activities/
-PKG_SUGAR_ACTIVITY_NAME:=$(shell, if [ -f $(PKG_BUILD_DIR)/activity/activity.info ]; then \
+PKG_SUGAR_ACTIVITY_NAME?=$(shell, if [ -f $(PKG_BUILD_DIR)/activity/activity.info ]; then \
 	grep name $(PKG_BUILD_DIR)/activity | cut -d "=" -f 1; \
 fi)
+ifeq ($(PKG_SUGAR_ACTIVITY_NAME),)
+    PKG_SUGAR_ACTIVITY_NAME=$(PKG_NAME)
+endif
+PKG_SUGAR_ACTIVITY_DIR:=/usr/share/sugar/activities/$(PKG_SUGAR_ACTIVITY_NAME).activity
 
 define Build/SugarActivity/Configure/Default
 	$(call Build/Configure/Default)

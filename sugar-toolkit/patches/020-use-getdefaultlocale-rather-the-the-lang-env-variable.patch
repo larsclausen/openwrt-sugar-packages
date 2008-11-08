@@ -1,0 +1,28 @@
+diff --git a/src/sugar/util.py b/src/sugar/util.py
+index c8bdfb1..d574d91 100644
+--- a/src/sugar/util.py
++++ b/src/sugar/util.py
+@@ -20,12 +20,12 @@
+ UNSTABLE. We have been adding helpers randomly to this module.
+ """
+ 
+-import os
+ import time
+ import sha
+ import random
+ import binascii
+ import gettext
++import locale
+ 
+ _ = lambda msg: gettext.dgettext('sugar-toolkit', msg)
+ 
+@@ -236,7 +236,8 @@ def timestamp_to_elapsed_string(timestamp, max_levels=2):
+             if levels > 0:
+                 time_period += COMMA
+ 
+-            key = ''.join((os.environ['LANG'], name_singular,
++                key = ''.join(('.'.join(locale.getdefaultlocale()),
++                           name_singular,
+                            str(elapsed_units)))
+             if key in _i18n_timestamps_cache:
+                 time_period += _i18n_timestamps_cache[key]

@@ -1,0 +1,11 @@
+--- a/bin/sugar-session
++++ b/bin/sugar-session
+@@ -130,7 +130,7 @@ def main():
+     client = gconf.client_get_default()
+     timezone = client.get_string('/desktop/sugar/date/timezone')
+ 
+-    if timezone is not '':    
++    if timezone is not '' and timezone is not None:
+         os.environ['TZ'] = timezone
+ 
+     start_datastore()

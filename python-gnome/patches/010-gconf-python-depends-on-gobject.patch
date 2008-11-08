@@ -1,0 +1,25 @@
+--- a/configure
++++ b/configure
+@@ -20950,7 +20950,7 @@ fi
+ 
+ 
+   pkg_config_args=glib-2.0
+-  for module in . $extra_mods
++  for module in . gobject $extra_mods
+   do
+       case "$module" in
+          gmodule)
+--- a/gconf/Makefile.in
++++ b/gconf/Makefile.in
+@@ -263,9 +263,9 @@ common_ldflags = -module -avoid-version $(PYTHON_LDFLAGS)
+ 
+ # gconf binding
+ pkgpyexec_LTLIBRARIES = gconf.la
+-gconf_la_CFLAGS = $(GCONF_CFLAGS)
++gconf_la_CFLAGS = $(GCONF_CFLAGS) $(GLIB_CFLAGS)
+ gconf_la_LDFLAGS = $(common_ldflags) -export-symbols-regex initgconf
+-gconf_la_LIBADD = $(GCONF_LIBS) $(PYTHON_LIBS)
++gconf_la_LIBADD = $(GCONF_LIBS) $(PYTHON_LIBS) $(GLIB_LIBS)
+ gconf_la_SOURCES = \
+ 	gconfmodule.c \
+ 	gconf-fixes.c \

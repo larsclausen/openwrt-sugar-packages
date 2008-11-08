@@ -1,0 +1,14 @@
+diff --git a/bin/sugar-session b/bin/sugar-session
+index d0b3d4d..7a61eda 100644
+--- a/bin/sugar-session
++++ b/bin/sugar-session
+@@ -17,8 +17,8 @@
+ 
+ import sys
+ import os
++import time
+ if os.environ.get('SUGAR_LOGGER_LEVEL', '') == 'debug':
+-    import time
+     print '%r STARTUP: Starting the shell' % time.time()
+     sys.stdout.flush()
+ 

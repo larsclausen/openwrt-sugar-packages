@@ -95,15 +95,28 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(2)/bin
 	$(INSTALL_BIN) \
 		$(PKG_INSTALL_DIR)/usr/bin/orbit2-config \
-		$(2)/bin
+		$(2)/bin/
 
 	$(INSTALL_BIN) \
 		$(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)/bin/orbit-idl-2 \
-		$(2)/bin
+		$(2)/bin/
+
+	$(INSTALL_DIR) $(1)/usr/share/aclocal
+	$(INSTALL_DATA) \
+	    $(PKG_INSTALL_DIR)/usr/share/aclocal/* \
+	    $(1)/usr/share/aclocal/
+
+	$(INSTALL_DIR) $(1)/usr/share/idl/orbit-2.0
+	$(INSTALL_DATA) \
+	    $(PKG_INSTALL_DIR)/usr/share/idl/orbit-2.0/* \
+	    $(1)/usr/share/idl/orbit-2.0/
 endef
 
 define Package/orbit2/install
-	$(CP) $(PKG_INSTALL_DIR)/* $(1)
+	$(INSTALL_DIR) $(1)/usr/lib
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/usr/lib/libORBit*.so* \
+		$(1)/usr/lib/
 endef
 
 $(eval $(call BuildPackage,orbit2))

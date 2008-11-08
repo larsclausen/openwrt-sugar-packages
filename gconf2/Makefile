@@ -78,17 +78,16 @@ define Package/libgconf2/install
 		$(PKG_INSTALL_DIR)/etc/gconf/* \
 		$(1)/etc/gconf/
 
-	$(INSTALL_DIR)/usr/lib
+	$(INSTALL_DIR) $(1)/usr/lib
 	$(INSTALL_DATA) \
 		$(PKG_INSTALL_DIR)/usr/lib/libgconf-2.{so*,a} \
 		$(1)/usr/lib/
 
 	$(INSTALL_BIN) \
 		$(PKG_INSTALL_DIR)/usr/lib/gconfd-2 \
-		$(PKG_INSTALL_DIR)/usr/lib/gconf-sanity-check-2 \
 		$(1)/usr/lib/
 
-	$(INSTALL_DIR)/usr/lib/GConf/2
+	$(INSTALL_DIR) $(1)/usr/lib/GConf/2
 	$(INSTALL_DATA) \
 		$(PKG_INSTALL_DIR)/usr/lib/GConf/2/libgconfbackend-xml.{so,a} \
 		$(1)/usr/lib/GConf/2/

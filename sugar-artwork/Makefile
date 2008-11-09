@@ -46,6 +46,6 @@ define Package/sugar-artwork/install
 endef
 
 $(eval $(call BuildPackage,sugar-artwork))
-$(eval $(call RequireCommand,icon-slice, \
-    $(PKG_NAME) requires icon-slice installed on the host-system. \
+$(eval $(call RequireCommand,icon-slicer, \
+    $(PKG_NAME) requires icon-slicer installed on the host-system. \
 ))

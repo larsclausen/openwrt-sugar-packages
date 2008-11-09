@@ -7,8 +7,9 @@ PROG=/usr/sbin/hald
 START=65
 
 start() {
+	mkdir -p /var/cache/hald
 	mkdir -p /var/run/hald
-	$SSD -S -p $PIDF -q -x $PROG  
+	$SSD -S -p $PIDF -q -x $PROG
 }
 
 stop() {
@@ -16,6 +17,6 @@ stop() {
 }
 
 status() {
-        ps | grep -q "^ *$(cat $PIDF 2>/dev/null) *.*$PROG"
+	ps | grep -q "^ *$(cat $PIDF 2>/dev/null) *.*$PROG"
 }
 

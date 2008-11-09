@@ -1,0 +1,19 @@
+*** hal-0.5.8.1/hald/hald_dbus.c.orig	2008-08-04 17:21:37.000000000 +0200
+--- hal-0.5.8.1/hald/hald_dbus.c	2008-08-04 17:22:32.000000000 +0200
+*************** device_is_executing_method (HalDevice *d
+*** 2902,2907 ****
+--- 2902,2915 ----
+  
+  	ret = FALSE;
+  
++     /* That should prevent crash */
++     if (udi_to_method_queue == NULL) {
++         udi_to_method_queue = g_hash_table_new_full (g_str_hash,
++                                 g_str_equal,
++                                 g_free,
++                                 NULL);
++     }
++ 
+  	if (g_hash_table_lookup_extended (udi_to_method_queue, d->udi, &origkey, (gpointer) &queue)) {
+  
+  		if (queue != NULL) {

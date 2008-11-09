@@ -1,0 +1,12 @@
+*** hal-0.5.8.1/hald/linux/addons/addon-storage.c.orig	2008-08-02 00:29:15.000000000 +0200
+--- hal-0.5.8.1/hald/linux/addons/addon-storage.c	2008-08-02 00:30:33.000000000 +0200
+***************
+*** 39,44 ****
+--- 39,45 ----
+  #include <string.h>
+  #include <sys/ioctl.h>
+  #include <unistd.h>
++ #include <limits.h>
+  
+  #include "libhal/libhal.h"
+  

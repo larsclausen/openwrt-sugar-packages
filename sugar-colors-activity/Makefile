@@ -1,4 +1,4 @@
-# 
+#
 # Copyright (C) 2008 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -8,7 +8,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sugar-colors-activity
-PKG_VERSION:=HEAD
+PKG_VERSION:=v8
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
@@ -30,7 +30,7 @@ ACTIVITY_DIR:=/usr/share/activities/Colors.activity
 
 define Build/Compile
 #	$(TARGET_CONFIGURE_OPTS) $(MAKE) -C $(PKG_BUILD_DIR)
-	
+
 	$(INSTALL_DIR) $(PKG_INSTALL_DIR)/$(ACTIVITY_DIR)
 	$(CP) $(PKG_BUILD_DIR)/activity/ $(PKG_INSTALL_DIR)/$(ACTIVITY_DIR)/
 	$(CP) $(PKG_BUILD_DIR)/data/ $(PKG_INSTALL_DIR)/$(ACTIVITY_DIR)/

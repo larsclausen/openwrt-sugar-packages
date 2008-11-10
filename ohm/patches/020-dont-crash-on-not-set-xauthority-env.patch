@@ -1,0 +1,14 @@
+diff --git a/plugins/glue/idle/ohm-plugin-idle.c b/plugins/glue/idle/ohm-plugin-idle.c
+index a26cd88..e7045a5 100644
+--- a/plugins/glue/idle/ohm-plugin-idle.c
++++ b/plugins/glue/idle/ohm-plugin-idle.c
+@@ -64,7 +64,8 @@ plugin_connect_idletime (OhmPlugin *plugin)
+ 	const gchar *xauth;
+ 
+ 	xauth = getenv ("XAUTHORITY");
+-	g_debug ("connecting with %s", xauth);
++	if(xauth)
++		g_debug ("connecting with %s", xauth);
+ 
+ 	idletime = idletime_new ();
+ 	if (idletime == NULL) {

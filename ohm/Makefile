@@ -1,4 +1,4 @@
-# 
+#
 # Copyright (C) 2008 OpenWrt.org
 #
 # This is free software, licensed under the GNU General Public License v2.
@@ -21,7 +21,7 @@ PKG_SOURCE_URL:=git://dev.laptop.org/projects/$(PKG_NAME)/
 include $(INCLUDE_DIR)/package.mk
 
 EXTRA_CFLAGS+=-I$(STAGING_DIR)/usr/lib/libintl/include \
-              -I$(STAGING_DIR)/usr/lib/libiconv/include
+		      -I$(STAGING_DIR)/usr/lib/libiconv/include
 
 EXTRA_LDFLAGS+=-L$(STAGING_DIR)/usr/lib/libintl/lib \
 				-L$(STAGING_DIR)/usr/lib/libiconv/lib
@@ -46,11 +46,16 @@ endef
 
 define Build/Compile
 	$(MAKE) -C $(PKG_BUILD_DIR)
-	$(MAKE) -C $(PKG_BUILD_DIR)/ install DESTDIR=$(PKG_INSTALL_DIR)
+	$(MAKE) -C $(PKG_BUILD_DIR)/ install DESTDIR="$(PKG_INSTALL_DIR)"
 endef
 
 define Package/ohm/install
 	$(CP) $(PKG_INSTALL_DIR)/* $(1)/
+
+	$(INSTALL_DIR) $(1)/etc/init.d/
+	$(INSTALL_BIN) \
+		./files/ohmd.init \
+		$(1)/etc/init.d/ohmd
 endef
 
 $(eval $(call BuildPackage,ohm))

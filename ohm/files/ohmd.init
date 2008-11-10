@@ -1,0 +1,22 @@
+#!/bin/sh /etc/rc.common
+# Copyright (C) 2007 OpenWrt.org
+
+SSD=start-stop-daemon
+PIDF=/var/run/ohmd.pid
+PROG=/usr/sbin/ohmd
+START=65
+
+start() {
+	mkdir -p /var/cache/hald
+	mkdir -p /var/run/hald
+	$SSD -S -p $PIDF -q -x $PROG
+}
+
+stop() {
+	$SSD -K -p $PIDF -q
+}
+
+status() {
+	ps | grep -q "^ *$(cat $PIDF 2>/dev/null) *.*$PROG"
+}
+

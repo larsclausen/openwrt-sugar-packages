@@ -21,7 +21,7 @@ index c8bdfb1..d574d91 100644
                  time_period += COMMA
  
 -            key = ''.join((os.environ['LANG'], name_singular,
-+            key = ''.join(('.'.join(locale.getdefaultlocale()),
++            key = ''.join(('.'.join([x or '' for x in locale.getdefaultlocale()]),
 +                           name_singular,
                             str(elapsed_units)))
              if key in _i18n_timestamps_cache:

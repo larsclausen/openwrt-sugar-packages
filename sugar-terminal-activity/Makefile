@@ -29,8 +29,8 @@ define Package/sugar-terminal-activity
 endef
 
 define Build/Compile
-    $(INSTALL_DIR) $(PKG_INSTALL_DIR)/usr/share/activities/Terminal.activity/
-	$(CP) $(PKG_BUILD_DIR)/icons/ $(PKG_BUILD_DIR)/activity/ $(PKG_BUILD_DIR)/*.py $(PKG_INSTALL_DIR)/usr/share/activities/Terminal.activity/
+    $(INSTALL_DIR) $(PKG_INSTALL_DIR)/usr/share/sugar/activities/Terminal.activity/
+	$(CP) $(PKG_BUILD_DIR)/icons/ $(PKG_BUILD_DIR)/activity/ $(PKG_BUILD_DIR)/*.py $(PKG_INSTALL_DIR)/usr/share/sugar/activities/Terminal.activity/
 endef
 
 define Package/sugar-terminal-activity/install

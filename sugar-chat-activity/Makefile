@@ -17,7 +17,8 @@ PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git://dev.laptop.org/chat-activity
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
 
-include $(INCLUDE_DIR)/package-sugar-activity.mk
+include $(INCLUDE_DIR)/package.mk
+include $(if $(DUMP),,$(STAGING_DIR)/mk/sugar-activity-package.mk)
 
 define Package/sugar-chat-activity
   SECTION:=xorg-app

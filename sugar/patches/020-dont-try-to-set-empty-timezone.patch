@@ -5,7 +5,7 @@
      timezone = client.get_string('/desktop/sugar/date/timezone')
  
 -    if timezone is not '':    
-+    if timezone is not '' and timezone is not None:
++    if isinstance(timezone, str) and timezone:
          os.environ['TZ'] = timezone
  
      start_datastore()

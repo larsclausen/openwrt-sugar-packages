@@ -1,0 +1,11 @@
+--- a/extensions/cpsection/network/model.py
++++ b/extensions/cpsection/network/model.py
+@@ -34,7 +34,7 @@ class ReadError(Exception):
+ 
+ def get_jabber():
+     client = gconf.client_get_default()
+-    return client.get_string('/desktop/sugar/collaboration/jabber_server')
++    return client.get_string('/desktop/sugar/collaboration/jabber_server') or ''
+ 
+ def print_jabber():
+     print get_jabber()

@@ -1,0 +1,76 @@
+diff --git a/src/olpc/datastore/metadatareader.c b/src/olpc/datastore/metadatareader.c
+index fd0f1fe..43fa3c9 100644
+--- a/src/olpc/datastore/metadatareader.c
++++ b/src/olpc/datastore/metadatareader.c
+@@ -8,10 +8,10 @@
+ static PyObject *byte_array_type = NULL;
+ 
+ int
+-add_property(char *metadata_path, char *property_name, PyObject *dict,
++add_property(const char *metadata_path, const char *property_name, PyObject *dict,
+              int must_exist)
+ {
+-    int file_path_size;
++    size_t file_path_size;
+     char *file_path = NULL;
+     FILE *file = NULL;
+     long file_size;
+@@ -67,7 +67,7 @@ add_property(char *metadata_path, char *property_name, PyObject *dict,
+             PyErr_NoMemory();
+             goto cleanup;
+     	}
+-        long read_size = fread(value_buf, 1, file_size, file);
++        size_t read_size = fread(value_buf, 1, file_size, file);
+         if (read_size < file_size) {
+     	    PyErr_Format(PyExc_IOError,
+                          "Error while reading property file %s", file_path);
+@@ -120,14 +120,14 @@ cleanup:
+ }
+ 
+ static PyObject *
+-read_from_properties_list (char *metadata_path, PyObject *properties)
++read_from_properties_list (const char *metadata_path, PyObject *properties)
+ {
+     PyObject *dict = PyDict_New();
+ 
+     int i;
+     for (i = 0; i < PyList_Size(properties); i++) {
+         PyObject *property = PyList_GetItem(properties, i);
+-        char *property_name = PyString_AsString (property);
++        const char *property_name = PyString_AsString (property);
+ 
+         if (add_property(metadata_path, property_name, dict, 0) == 0)
+             goto cleanup;
+@@ -143,7 +143,7 @@ cleanup:
+ }
+ 
+ static PyObject *
+-read_all_properties (char *metadata_path)
++read_all_properties (const char *metadata_path)
+ {
+     PyObject *dict = PyDict_New();
+ 	DIR *dir_stream = NULL;
+@@ -151,10 +151,8 @@ read_all_properties (char *metadata_path)
+ 
+     dir_stream = opendir (metadata_path);
+ 	if (dir_stream == NULL) {
+-	    char buf[256];
+-	    snprintf(buf, sizeof(buf), "Couldn't open metadata directory %s",
++	    PyErr_Format(PyExc_IOError,  "Couldn't open metadata directory %s",
+ 	             metadata_path);
+-        PyErr_SetString(PyExc_IOError, buf);
+         goto cleanup;
+ 	}
+ 
+@@ -162,9 +160,9 @@ read_all_properties (char *metadata_path)
+     while (dir_entry != NULL) {
+         // Skip . and ..
+         if (dir_entry->d_name[0] == '.' &&
+-            (strlen(dir_entry->d_name) == 1 ||
++            (dir_entry->d_name[1] == '\0' ||
+                 (dir_entry->d_name[1] == '.' &&
+-                    strlen(dir_entry->d_name) == 2)))
++                    dir_entry->d_name[2] == '\0')))
+ 			goto next_property;
+ 
+         if (add_property(metadata_path, dir_entry->d_name, dict, 1) == 0)

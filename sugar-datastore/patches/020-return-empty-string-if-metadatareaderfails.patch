@@ -1,0 +1,16 @@
+diff --git a/src/olpc/datastore/metadatastore.py b/src/olpc/datastore/metadatastore.py
+index ca194b9..2efae63 100644
+--- a/src/olpc/datastore/metadatastore.py
++++ b/src/olpc/datastore/metadatastore.py
+@@ -38,7 +38,10 @@ class MetadataStore(object):
+ 
+     def retrieve(self, uid, properties=None):
+         dir_path = layoutmanager.get_instance().get_entry_path(uid)
+-        return metadatareader.retrieve(dir_path, properties)
++        try:
++            return metadatareader.retrieve(dir_path, properties)
++        except:
++            return ''
+ 
+     def delete(self, uid):
+         dir_path = layoutmanager.get_instance().get_entry_path(uid)

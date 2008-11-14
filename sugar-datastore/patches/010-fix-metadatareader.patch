@@ -1,0 +1,99 @@
+diff --git a/src/olpc/datastore/metadatareader.c b/src/olpc/datastore/metadatareader.c
+index f0cec93..b98192b 100644
+--- a/src/olpc/datastore/metadatareader.c
++++ b/src/olpc/datastore/metadatareader.c
+@@ -30,15 +30,15 @@ add_property(char *metadata_path, char *property_name, PyObject *dict,
+ 
+     if ((!must_exist) && (stat(file_path, &file_stat) != 0)) {
+-        PyMem_Free(file_path);
+-        return;
++   	    PyErr_Format(PyExc_IOError, "Property file %s does not exist: %s",
++	             file_path, strerror(errno));
++        PyMem_Free(file_path);
++        return 0;
+     }
+ 
+     file = fopen(file_path, "r");
+     if (file == NULL) {
+-	    char buf[256];
+-	    snprintf(buf, sizeof(buf), "Cannot open property file %s: %s",
++	    PyErr_Format(PyExc_IOError, "Cannot open property file %s: %s",
+ 	             file_path, strerror(errno));
+-        PyErr_SetString(PyExc_IOError, buf);
+         goto cleanup;
+     }
+ 
+@@ -69,16 +69,11 @@ add_property(char *metadata_path, char *property_name, PyObject *dict,
+     	}
+         long read_size = fread(value_buf, 1, file_size, file);
+         if (read_size < file_size) {
+-    	    char buf[256];
+-    	    snprintf(buf, sizeof(buf),
+-    	             "Error while reading property file %s", file_path);
+-            PyErr_SetString(PyExc_IOError, buf);
++    	    PyErr_Format(PyExc_IOError,
++                         "Error while reading property file %s", file_path);
+             goto cleanup;
+         }
+ 
+-        fclose(file);
+-        file = NULL;
+-
+         // Convert value to dbus.ByteArray
+         PyObject *args = Py_BuildValue("(s#)", value_buf, file_size);
+ 
+@@ -93,6 +88,9 @@ add_property(char *metadata_path, char *property_name, PyObject *dict,
+         }
+     }
+ 
++    fclose(file);
++    file = NULL;
++
+     // Add property to the metadata dict
+     if (PyDict_SetItemString(dict, property_name, value) == -1) {
+         PyErr_SetString(PyExc_ValueError,
+@@ -118,7 +116,7 @@ cleanup:
+     if (value) {
+         Py_DECREF(value);
+     }
+-    return 0;    
++    return 0;
+ }
+ 
+ static PyObject *
+@@ -141,7 +139,7 @@ cleanup:
+     if (dict) {
+         Py_DECREF(dict);
+     }
+-    return NULL;        
++    return NULL;
+ }
+ 
+ static PyObject *
+@@ -164,7 +162,7 @@ read_all_properties (char *metadata_path)
+     while (dir_entry != NULL) {
+         // Skip . and ..
+         if (dir_entry->d_name[0] == '.' &&
+-            (strlen(dir_entry->d_name) == 1 || 
++            (strlen(dir_entry->d_name) == 1 ||
+                 (dir_entry->d_name[1] == '.' &&
+                     strlen(dir_entry->d_name) == 2)))
+ 			goto next_property;
+@@ -187,7 +185,7 @@ cleanup:
+     if (dir_stream) {
+     	closedir(dir_stream);
+ 	}
+-    return NULL;        
++    return NULL;
+ }
+ 
+ static PyObject *
+@@ -231,7 +229,7 @@ initmetadatareader(void)
+ {
+   PyObject* mod;
+   mod = Py_InitModule("metadatareader", metadatareader_functions);
+-  
++
+   PyObject *dbus_module = PyImport_ImportModule("dbus");
+   byte_array_type = PyObject_GetAttrString(dbus_module, "ByteArray");
+ }

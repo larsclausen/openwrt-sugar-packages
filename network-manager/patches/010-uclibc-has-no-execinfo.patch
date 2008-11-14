@@ -1,0 +1,65 @@
+--- a/libnm-util/nm-utils.h
++++ b/libnm-util/nm-utils.h
+@@ -28,14 +28,16 @@
+ #define NM_UTILS_H
+ 
+ #include <glib.h>
++#ifndef __UCLIBC__
+ #include <execinfo.h>
++#endif
+ 
+ #include "nm-connection.h"
+ 
+ /*********************************************************/
+ /* The API defined here is _NOT_ guaranteed in any way!! */
+ /*********************************************************/
+-
++#ifndef __UCLIBC__
+ #define nm_print_backtrace()						\
+ G_STMT_START								\
+ {									\
+@@ -59,7 +61,15 @@ G_STMT_START								\
+ 	}								\
+ }									\
+ G_STMT_END
+-
++#else
++#define nm_print_backtrace()						\
++G_STMT_START								\
++{									\
++    g_critical ("traceback:\n"                                          \
++                "Network-Manager was build without backtrace support"); \
++}									\
++G_STMT_END
++#endif
+ #define nm_get_timestamp(timestamp)					\
+ G_STMT_START								\
+ {									\
+--- a/src/nm-logging.c
++++ b/src/nm-logging.c
+@@ -20,7 +20,9 @@
+  */
+ 
+ #include <syslog.h>
++#ifndef __UCLIBC__
+ #include <execinfo.h>
++#endif
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <unistd.h>
+@@ -34,6 +36,7 @@
+ static void
+ fallback_get_backtrace (void)
+ {
++#ifndef __UCLIBC__
+ 	void *	frames[64];
+ 	size_t	size;
+ 	char **	strings;
+@@ -49,6 +52,7 @@ fallback_get_backtrace (void)
+ 		syslog (LOG_CRIT, "******************* END **********************************");
+ 	}
+ 	else
++#endif
+ 	{
+ 		nm_warning ("NetworkManager crashed, but symbols "
+ 					"couldn't be retrieved.");

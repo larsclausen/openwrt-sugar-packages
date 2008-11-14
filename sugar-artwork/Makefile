@@ -16,8 +16,12 @@ PKG_SOURCE_VERSION:=$(PKG_VERSION)
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=git://dev.laptop.org/artwork
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
+PKG_BUILD_DEPENDS:=icon-naming-utils
+
 
 include $(INCLUDE_DIR)/package.mk
+
+PKG_INSTALL:=1
 
 define Package/sugar-artwork
   SECTION:=xorg-framework
@@ -29,16 +33,7 @@ endef
 
 define Build/Configure
 	(cd $(PKG_BUILD_DIR); autoreconf -i);
-#	(cd $(PKG_BUILD_DIR); CONFIG_SITE= \
-#		PKG_CONFIG_PATH= \
-#		./configure --prefix=/usr \
-#	);
-#	$(MAKE) -C $(PKG_BUILD_DIR)/cursor/cursorthemegen/ all
 	$(call Build/Configure/Default)
-endef
-
-define Build/Compile
-	$(MAKE) -C $(PKG_BUILD_DIR)/ all install DESTDIR=$(PKG_INSTALL_DIR)
 endef
 
 define Package/sugar-artwork/install
@@ -48,4 +43,5 @@ endef
 $(eval $(call BuildPackage,sugar-artwork))
 $(eval $(call RequireCommand,icon-slicer, \
     $(PKG_NAME) requires icon-slicer installed on the host-system. \
+    http://www.freedesktop.org/wiki/Software/icon-slicer \
 ))

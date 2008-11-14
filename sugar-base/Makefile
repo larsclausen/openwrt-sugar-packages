@@ -25,17 +25,12 @@ include $(INCLUDE_DIR)/package.mk
 PKG_INSTALL=1
 
 EXTRA_CFLAGS:= \
-	-I$(STAGING_DIR)/usr/include/pygtk-2.0 \
-	-I$(STAGIN_DIR)/usr/include/glib-2.0 \
-	-I$(STAGING_DIR)/usr/lib/glib-2.0/include \
 	-I$(STAGING_DIR)/usr/lib/libintl/include \
 	-I$(STAGING_DIR)/usr/lib/libiconv/include
 
 EXTRA_LDFLAGS:= \
 	-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
 	-L$(STAGING_DIR)/usr/lib/libintl/lib \
-	-L$(STAGING_DIR)/usr/lib/libiconv/lib \
-	-L$(STAGING_DIR)/usr/lib -lglib-2.0 -lintl -liconv
 
 define Package/sugar-base
   SECTION:=xorg-framework

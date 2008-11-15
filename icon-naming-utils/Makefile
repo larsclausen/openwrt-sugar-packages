@@ -24,19 +24,33 @@ define Build/Compile
 		all install
 endef
 
+define Build/Configure
+	$(call Build/Configure/Default, \
+		--libexecdir=/usr/lib/icon-naming-utils \
+	)
+endef
+
 define Build/InstallDev
-	$(INSTALL_DIR) $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/icon-naming-utils
 	$(INSTALL_BIN) \
-        $(PKG_INSTALL_DIR)/usr/lib/icon-name-mapping \
-        $(1)/usr/lib/
+		$(PKG_INSTALL_DIR)/usr/lib/icon-naming-utils/icon-name-mapping \
+		$(1)/usr/lib/icon-naming-utils/
+	$(SED) \
+		's,/usr/share/icon-naming-utils,$(STAGING_DIR)/usr/share/icon-naming-utils,g' \
+		$(1)/usr/lib/icon-naming-utils/icon-name-mapping
+
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig/
 	$(INSTALL_DATA) \
-        $(PKG_INSTALL_DIR)/usr/share/pkgconfig/* \
-        $(1)/usr/lib/pkgconfig/
+		$(PKG_INSTALL_DIR)/usr/share/pkgconfig/* \
+		$(1)/usr/lib/pkgconfig/
+	$(SED) \
+		's,^program_path=,program_path=$(STAGING_DIR),g' \
+		$(1)/usr/lib/pkgconfig/icon-naming-utils.pc
+
 	$(INSTALL_DIR) $(1)/usr/share/icon-naming-utils/
 	$(INSTALL_DATA) \
-        $(PKG_INSTALL_DIR)/usr/share/icon-naming-utils/* \
-        $(1)/usr/share/icon-naming-utils/
+		$(PKG_INSTALL_DIR)/usr/share/icon-naming-utils/* \
+		$(1)/usr/share/icon-naming-utils/
 endef
 
 define Package/icon-naming-utils/install

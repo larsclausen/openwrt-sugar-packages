@@ -28,7 +28,7 @@ define Package/sugar-artwork
   CATEGORY:=Xorg
   SUBMENU:=framework
   TITLE:=sugar-artwork Desktop Environment
-  DEPENDS:=gtk2
+  DEPENDS:=+gtk2
 endef
 
 define Build/Configure

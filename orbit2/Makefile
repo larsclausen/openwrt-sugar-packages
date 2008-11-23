@@ -71,14 +71,16 @@ define Build/Configure
 		--enable-debug=no \
 	);
 	$(MAKE) -C $(PKG_BUILD_DIR)/src/idl-compiler install clean
-	$(call Build/Configure/Default)
+	$(call Build/Configure/Default,, \
+		IDL_COMPILER=$(PKG_BUILD_DIR)/build/$(GNU_HOST_NAME)/bin/orbit-idl-2 \
+	)
 endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/{include/orbit-2.0,lib/pkgconfig}
 
 	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)/usr/lib/*.{so*,la} \
+		$(PKG_INSTALL_DIR)/usr/lib/*.{so*,a,la} \
 		$(1)/usr/lib/
 
 	$(INSTALL_DATA) \
@@ -103,13 +105,13 @@ define Build/InstallDev
 
 	$(INSTALL_DIR) $(1)/usr/share/aclocal
 	$(INSTALL_DATA) \
-	    $(PKG_INSTALL_DIR)/usr/share/aclocal/* \
-	    $(1)/usr/share/aclocal/
+		$(PKG_INSTALL_DIR)/usr/share/aclocal/* \
+		$(1)/usr/share/aclocal/
 
 	$(INSTALL_DIR) $(1)/usr/share/idl/orbit-2.0
 	$(INSTALL_DATA) \
-	    $(PKG_INSTALL_DIR)/usr/share/idl/orbit-2.0/* \
-	    $(1)/usr/share/idl/orbit-2.0/
+		$(PKG_INSTALL_DIR)/usr/share/idl/orbit-2.0/* \
+		$(1)/usr/share/idl/orbit-2.0/
 endef
 
 define Package/orbit2/install

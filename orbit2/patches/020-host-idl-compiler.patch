@@ -7,7 +7,7 @@ index 1cf644e..0e2c27d 100644
  
  IDL_FILES = dynamic-defs.idl
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  BUILT_SOURCES = $(DYNAMIC_IDLOUT)
@@ -20,7 +20,7 @@ index 587adc1..2b51938 100644
  IDL_FILES = corba-defs.idl iop-defs.idl corba-ops.idl orbit-interface.idl
  IDL_DIR = $(top_srcdir)/src/orb/orb-core/
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  IDL_FLAGS_CORBA_OPS = --showcpperrors
@@ -33,7 +33,7 @@ index 7938c53..c451c21 100644
  
  IDL_FILES = poa-defs.idl
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  BUILT_SOURCES = $(POA_IDLOUT)
@@ -46,7 +46,7 @@ index 13168fd..8323751 100644
  IDL_DIR = $(top_srcdir)/src/orb/dynamic/
  IDL_FILES = dynamic-defs.idl
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  CLEANFILES = $(BUILT_SOURCES)
@@ -59,7 +59,7 @@ index c70d909..cf5fbbc 100644
  IDL_FILES = corba-defs.idl iop-defs.idl orbit-interface.idl
  IDL_DIR = $(top_srcdir)/src/orb/orb-core/
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  CLEANFILES = $(BUILT_SOURCES)
@@ -72,7 +72,7 @@ index b0fe78a..2ad5567 100644
  IDL_FILES = poa-defs.idl
  IDL_DIR = $(top_srcdir)/src/orb/poa/
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  CLEANFILES = $(BUILT_SOURCES)
@@ -85,7 +85,21 @@ index 8b882d9..7239cdf 100644
  IDL_FLAGS = --showcpperrors
  IDL_FILES = CosNaming.idl
 -IDL_COMPILER = $(top_builddir)/src/idl-compiler/orbit-idl-2$(EXEEXT)
-+IDL_COMPILER = $(top_builddir)/build/x86_64-linux-gnu/bin/orbit-idl-2
++IDL_COMPILER = @IDL_COMPILER@
  @MAINTAINER_MODE_TRUE@IDL_DEPS_MAGIC := $(shell mkdir .deps > /dev/null 2>&1 || :)
  @MAINTAINER_MODE_TRUE@IDL_DEP_FILES = $(IDL_FILES:%.idl=.deps/%.idl.P)
  CLEANFILES = my_cosnaming_built $(BUILT_SOURCES)
+diff --git a/configure b/configure
+index 18f4f0b..ffc1a9c 100755
+--- a/configure
++++ b/configure
+@@ -948,7 +948,8 @@ ENABLE_GTK_DOC_FALSE
+ GTK_DOC_USE_LIBTOOL_TRUE
+ GTK_DOC_USE_LIBTOOL_FALSE
+ LIBOBJS
+-LTLIBOBJS'
++LTLIBOBJS
++IDL_COMPILER'
+ ac_subst_files=''
+ ac_user_opts='
+ enable_option_checking

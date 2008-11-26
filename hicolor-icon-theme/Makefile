@@ -22,7 +22,7 @@ PKG_INSTALL=1
 
 define Package/hicolor-icon-theme
   SECTION:=xorg-data
-  CATEGORY:=XOrg
+  CATEGORY:=Xorg
   SUBMENU:=data
   TITLE:=Default icon theme
   URL:=http://icon-theme.freedesktop.org/wiki/HicolorTheme

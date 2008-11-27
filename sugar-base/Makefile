@@ -37,7 +37,7 @@ define Package/sugar-base
   CATEGORY:=Xorg
   SUBMENU:=framework
   TITLE:=sugar-base Desktop Environment
-#  DEPENDS:=+python-wnck
+  DEPENDS:=+pygobject +pygtk
 endef
 
 define Build/Configure

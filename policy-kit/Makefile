@@ -29,9 +29,12 @@ EXTRA_LDFLAGS+= \
 	-L$(STAGING_DIR)/usr/lib/libiconv/lib
 
 define Build/Configure
-	$(call Build/Configure/Default, --with-os-type=OpenWRT \
+	$(call Build/Configure/Default, \
+		--libexecdir=/usr/lib/policykit \
+		--with-os-type=OpenWRT \
 		--with-polkit-user=daemon \
-		--with-poolkit-group=root)
+		--with-polkit-group=root \
+	)
 endef
 
 define Build/InstallDev
@@ -50,10 +53,23 @@ define Package/policy-kit/install
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/PolicyKit/* $(1)/usr/share/PolicyKit/
 	$(INSTALL_DIR) $(1)/usr/bin/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/* $(1)/usr/bin/
-	$(INSTALL_DIR) $(1)/usr/lib/
+	$(INSTALL_DIR) $(1)/usr/lib/policykit
 	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/*.{so.*,a} $(1)/usr/lib/
 	# Do we really need to copy alle these file?
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/polkit{d,-*} $(1)/usr/lib/
+	$(INSTALL_BIN) \
+		$(PKG_INSTALL_DIR)/usr/lib/policykit/polkit{d,-*} \
+		$(1)/usr/lib/policykit
+
+	$(INSTALL_DIR) $(1)/etc/{dbus-1/system.d,pam.d,PolicyKit}
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/etc/dbus-1/system.d/* \
+		$(1)/etc/dbus-1/system.d/
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/etc/pam.d/* \
+		$(1)/etc/pam.d/
+	$(INSTALL_DATA) \
+		$(PKG_INSTALL_DIR)/etc/PolicyKit/* \
+		$(1)/etc/PolicyKit/
 endef
 
 $(eval $(call BuildPackage,policy-kit))

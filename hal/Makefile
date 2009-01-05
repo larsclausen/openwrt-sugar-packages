@@ -42,7 +42,7 @@ endef
 
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/*.{so*,la} $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.{so*,la,a} $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* $(1)/usr/lib/pkgconfig/
 	$(INSTALL_DIR) $(1)/usr/include/hal/
@@ -59,7 +59,7 @@ define Package/hal/install
 	$(INSTALL_DIR) $(1)/usr/share/hal/
 	$(CP) $(PKG_INSTALL_DIR)/usr/share/hal/* $(1)/usr/share/hal/
 	$(INSTALL_DIR) $(1)/usr/lib/
-	$(INSTALL_DATA) $(PKG_INSTALL_DIR)/usr/lib/*.{so*,a} $(1)/usr/lib/
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/{hald,hal}-* $(1)/usr/lib/
 	$(INSTALL_DIR) $(1)/usr/lib/hal/scripts/
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/lib/hal/scripts/hal-* $(1)/usr/lib/hal/scripts/

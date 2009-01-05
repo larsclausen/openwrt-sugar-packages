@@ -46,7 +46,6 @@ define Build/Configure
 		--disable-cdda \
 		--disable-gnutls \
 	)
-
 endef
 
 define Build/InstallDev
@@ -61,7 +60,7 @@ define Build/InstallDev
 		$(1)/usr/include/gnome-vfs-module-2.0/libgnomevfs/
 
 	$(INSTALL_DIR) $(1)/usr/lib/{pkgconfig,gnome-vfs-2.0/include}
-	$(INSTALL_DATA) \
+	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/libgnomevfs-2.{so*,a,la} \
 		$(1)/usr/lib/
 
@@ -76,7 +75,7 @@ endef
 
 define Package/gnome-vfs/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_DATA) \
+	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/libgnomevfs-2.so* \
 		$(1)/usr/lib/
 

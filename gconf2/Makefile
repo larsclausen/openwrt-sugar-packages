@@ -59,8 +59,8 @@ define Build/InstallDev
 		$(PKG_INSTALL_DIR)/usr/include/gconf/2/gconf/* \
 		$(1)/usr/include/gconf/2/gconf/
 
-	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)/usr/lib/libgconf-2.{so*,la} \
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/lib/libgconf-2.{so*,la,a} \
 		$(1)/usr/lib/
 
 	$(INSTALL_DATA) \
@@ -79,8 +79,8 @@ define Package/libgconf2/install
 		$(1)/etc/gconf/
 
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)/usr/lib/libgconf-2.{so*,a} \
+	$(CP) \
+		$(PKG_INSTALL_DIR)/usr/lib/libgconf-2.so* \
 		$(1)/usr/lib/
 
 	$(INSTALL_BIN) \
@@ -89,7 +89,7 @@ define Package/libgconf2/install
 
 	$(INSTALL_DIR) $(1)/usr/lib/GConf/2
 	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)/usr/lib/GConf/2/libgconfbackend-xml.{so,a} \
+		$(PKG_INSTALL_DIR)/usr/lib/GConf/2/libgconfbackend-xml.so \
 		$(1)/usr/lib/GConf/2/
 
 	$(INSTALL_DIR) $(1)/usr/share/dbus-1/services
@@ -107,4 +107,3 @@ endef
 
 $(eval $(call BuildPackage,libgconf2))
 $(eval $(call BuildPackage,gconf2))
-

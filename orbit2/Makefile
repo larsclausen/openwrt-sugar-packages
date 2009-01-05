@@ -79,7 +79,7 @@ endef
 define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/{include/orbit-2.0,lib/pkgconfig}
 
-	$(INSTALL_DATA) \
+	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/*.{so*,a,la} \
 		$(1)/usr/lib/
 
@@ -116,7 +116,7 @@ endef
 
 define Package/orbit2/install
 	$(INSTALL_DIR) $(1)/usr/lib
-	$(INSTALL_DATA) \
+	$(CP) \
 		$(PKG_INSTALL_DIR)/usr/lib/libORBit*.so* \
 		$(1)/usr/lib/
 endef

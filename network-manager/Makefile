@@ -22,9 +22,9 @@ EXTRA_LDFLAGS+= \
 	-L$(STAGING_DIR)/usr/lib/libiconv/lib
 
 define Package/network-manager
-  SECTION:=xorg-framework
+  SECTION:=xorg-apps
   CATEGORY:=Xorg
-  SUBMENU:=lib
+  SUBMENU:=app
   TITLE:=Network Manager
   URL:=http://network-manager.sourceforge.net/
   DEPENDS:=+wireless-tools +hal +libnl +libgcrypt +libiw +libuuid +libgnutls

@@ -47,8 +47,8 @@ endef
 
 define Build/Configure
 	$(call Build/Configure/Default, \
-	    --disable-allbindings \
-	    $(if $(CONFIG_PACKAGE_python-gconf), --enable-gconf, --disable-gconf), \
+		--disable-allbindings \
+		$(if $(CONFIG_PACKAGE_python-gconf), --enable-gconf, --disable-gconf), \
 	)
 endef
 
@@ -63,16 +63,20 @@ define Build/InstallDev
 		$(PKG_INSTALL_DIR)/usr/lib/pkgconfig/* \
 		$(1)/usr/lib/pkgconfig
 
+	$(SED) \
+		's,^datadir=,datadir=$(STAGING_DIR),g' \
+		$(1)/usr/lib/pkgconfig/gnome-python-2.0.pc
+
 	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/gtk-2.0
 	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/gtk-2.0/*.{so,la} \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/gtk-2.0/*.{so,a,la} \
 		$(1)$(PYTHON_PKG_DIR)/gtk-2.0
 endef
 
 define Package/python-gnome/install/Default
 	$(INSTALL_DIR) $(1)$(PYTHON_PKG_DIR)/gtk-2.0
 	$(INSTALL_DATA) \
-		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/gtk-2.0/$(2).{so,a} \
+		$(PKG_INSTALL_DIR)$(PYTHON_PKG_DIR)/gtk-2.0/$(2).so \
 		$(1)$(PYTHON_PKG_DIR)/gtk-2.0
 endef
 

@@ -20,9 +20,9 @@ EXTRA_LDFLAGS+=-Wl,-rpath-link=$(STAGING_DIR)/usr/lib \
 			   -L$(STAGING_DIR)/usr/lib/libiconv/lib/
 
 define Package/gnome-vfs
-  SECTION:=xorg-framework
+  SECTION:=xorg-libs
   CATEGORY:=Xorg
-  SUBMENU:=lib
+  SUBMENU:=libraries
   TITLE:=gnome-vfs
   DEPENDS:=+glib2 +libgconf2 +bzip2 +gnome-mime-data
 endef

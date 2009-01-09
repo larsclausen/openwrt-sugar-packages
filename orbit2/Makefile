@@ -43,9 +43,9 @@ CONFIGURE_VARS += \
 	ac_cv_alignof_CORBA_pointer=4
 
 define Package/orbit2
-  SECTION:=xorg-framework
+  SECTION:=xorg-libs
   CATEGORY:=Xorg
-  SUBMENU:=lib
+  SUBMENU:=libraries
   TITLE:=ORBit2
   URL:=http://www.gnome.org/projects/ORBit2/
   DEPENDS:=+glib2 +libIDL2
